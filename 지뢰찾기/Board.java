@@ -1,4 +1,4 @@
-class Board {
+class Board {//게임판과 로직 관리 
     private int rows, cols, mineCount;
     private Cell[][] cells;
 
