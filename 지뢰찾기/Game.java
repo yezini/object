@@ -1,4 +1,4 @@
-class Game {
+class Game {//게임 전체 제어 
     private Board board;
     private Scanner scanner = new Scanner(System.in);
     private boolean isGameOver = false;
