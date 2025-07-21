@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class MinesweeperGame {
 
-    private static String[][] board = new String[8][10];
-    private static Integer[][] landMineCounts = new Integer[8][10];
-    private static boolean[][] landMines = new boolean[8][10];
+    private static String[][] board = new String[8][10];  //사용자에게 보여지는 게임판에 해당  
+    private static Integer[][] landMineCounts = new Integer[8][10]; //해당 칸 주변에 지뢰가 몇개 있는지를 지정 
+    private static boolean[][] landMines = new boolean[8][10]; //실제 지뢰가 있는 위치를 boolean으로 지정 
     private static int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
 
     public static void main(String[] args) {
@@ -13,22 +13,24 @@ public class MinesweeperGame {
         System.out.println("지뢰찾기 게임 시작!");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {  //초기 보드판에 해당 
             for (int j = 0; j < 10; j++) {
-                board[i][j] = "□";
+                board[i][j] = "□"; //모든 셀에 "□"를 할당
             }
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) { //지뢰 10개를 랜덤으로 배치 
             int col = new Random().nextInt(10);
             int row = new Random().nextInt(8);
             landMines[row][col] = true;
         }
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 10; j++) {
+        //각 셀 주변에 있는 지뢰 개수 세기 ,  landMines[i][j] == true 이면 해당 셀은 제뢰가 있는 셀
+        for (int i = 0; i < 8; i++) { //헹 
+            for (int j = 0; j < 10; j++) {   //열 
                 int count = 0;
-                if (!landMines[i][j]) {
+                if (!landMines[i][j]) { //현재 셀에 지뢰가 없다면 
+                   //주변 8개 검사 
                     if (i - 1 >= 0 && j - 1 >= 0 && landMines[i - 1][j - 1]) {
-                        count++;
+                        count++;  //지뢰가 있으면 count 수행 
                     }
                     if (i - 1 >= 0 && landMines[i - 1][j]) {
                         count++;
@@ -51,9 +53,9 @@ public class MinesweeperGame {
                     if (i + 1 < 8 && j + 1 < 10 && landMines[i + 1][j + 1]) {
                         count++;
                     }
-                    landMineCounts[i][j] = count;
+                    landMineCounts[i][j] = count;  //지뢰 수 저장 
                     continue;
-                }
+                } //현재 셀에 지뢰가 있다면 
                 landMineCounts[i][j] = 0;
             }
         }
