@@ -1,4 +1,4 @@
-class Cell { //각 셀의 정보를 저장 (지뢰 여부, 열림 여부, 깃발 여부 등)
+class Cell { //한 칸의 상태 (지뢰 유무, 깃발 여부, 열린 여부 등) 관리
     private boolean mine = false;
     private boolean opened = false;
     private boolean flagged = false;
