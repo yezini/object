@@ -1,4 +1,4 @@
-class Board {// 전체 게임판 및 지뢰 배치, 상태 관리
+class Board {//전체 게임판(Cell 2차원 배열), 지뢰 배치, 셀 열기, 승리 조건 검사
     private int rows, cols, mineCount;
     private Cell[][] cells;
 
