@@ -1,4 +1,4 @@
-class Board {//게임판과 로직 관리 
+class Board {// 전체 게임판 및 지뢰 배치, 상태 관리
     private int rows, cols, mineCount;
     private Cell[][] cells;
 
