@@ -7,6 +7,7 @@ public class MinesweeperGame {
     private static Integer[][] landMineCounts = new Integer[8][10]; //해당 칸 주변에 지뢰가 몇개 있는지를 지정 
     private static boolean[][] landMines = new boolean[8][10]; //실제 지뢰가 있는 위치를 boolean으로 지정 
     private static int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
+        // □ : 아직 열지 않은 칸 , ■ : 열었는데 주변에 지뢰가 하나도 없는 칸 , 숫자는 해당 숫자만큼 지뢰있음을 표시 
 
     public static void main(String[] args) {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -80,16 +81,16 @@ public class MinesweeperGame {
             System.out.println("선택할 좌표를 입력하세요. (예: a1)"); //사용자가 열고 싶은 칸 지정  (문자+숫자 조합)
             String input = scanner.nextLine();
             System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
-            String input2 = scanner.nextLine();
+            String input2 = scanner.nextLine(); //사용자가 하는 행동을 저장하는 문자열 
             char c = input.charAt(0); //'3' → 2
             char r = input.charAt(1); // 'f' → 5 
                 // 1a는 [0][0]를 의미 
             int col;
-            switch (c) {
-                case 'a':
+            switch (c) { 
+                case 'a':  // a -1 -> 0   (인덱스 -1)
                     col = 0;
                     break;
-                case 'b':
+                case 'b':  // b -1 -> 1
                     col = 1;
                     break;
                 case 'c':
@@ -120,61 +121,62 @@ public class MinesweeperGame {
                     col = -1;
                     break;
             }
-            int row = Character.getNumericValue(r) - 1;
-            if (input2.equals("2")) {
-                board[row][col] = "⚑";
+            int row = Character.getNumericValue(r) - 1; //문자를 숫자로 바꿔 인덱스로 변환 (배열 인덱스)
+            if (input2.equals("2")) { //좌표에 깃발 표시
+                board[row][col] = "⚑"; //사용자가 해당 칸에 깃발 표시
                 boolean open = true;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 10; j++) {
                         if (board[i][j].equals("□")) {
-                            open = false;
+                            open = false; //열리지 않은 칸 
                         }
                     }
                 }
                 if (open) {
-                    gameStatus = 1;
+                    gameStatus = 1; //게임 클리어 
                 }
-            } else if (input2.equals("1")) {
+            } else if (input2.equals("1")) {  //선택한 좌표 칸 열기 
                 if (landMines[row][col]) {
-                    board[row][col] = "☼";
-                    gameStatus = -1;
-                    continue;
-                } else {
-                    open(row, col);
+                    board[row][col] = "☼"; //사용자가 지뢰 밟음 
+                    gameStatus = -1;   //게임 종료 
+                    continue;  //다음 루프로 넘어감 
+                } else {  //지뢰가 아닌 경우에 해당 
+                    open(row, col);    //재귀함수 호출 
                 }
                 boolean open = true;
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 10; j++) {
                         if (board[i][j].equals("□")) {
-                            open = false;
+                            open = false;  //열리지 않은 칸 
                         }
                     }
                 }
                 if (open) {
                     gameStatus = 1;
                 }
-            } else {
+            } else { //선택한 값이 1또는 2가 아닌 경우 
                 System.out.println("잘못된 번호를 선택하셨습니다.");
             }
         }
     }
 
-    private static void open(int row, int col) {
-        if (row < 0 || row >= 8 || col < 0 || col >= 10) {
+    private static void open(int row, int col) {  //지뢰가 아닌 칸을 여는 함수에 해당 
+        if (row < 0 || row >= 8 || col < 0 || col >= 10) { //배열 범위 벗어나면 종료 
             return;
         }
-        if (!board[row][col].equals("□")) {
+        if (!board[row][col].equals("□")) {  //이미 열려있는 칸이면 종료 
             return;
         }
-        if (landMines[row][col]) {
+        if (landMines[row][col]) { //지뢰이면 종료 (열지 않음)
             return;
         }
-        if (landMineCounts[row][col] != 0) {
+        if (landMineCounts[row][col] != 0) {  //주변에 지뢰의 개수를 숫자로 표시하고 종료 
             board[row][col] = String.valueOf(landMineCounts[row][col]);
             return;
-        } else {
+        } else {//주변에 지뢰가 하나도 없으면 ■ 표시 
             board[row][col] = "■";
         }
+        //주변 8개의 영역에 해당하는 칸 열기 (재귀함수)
         open(row - 1, col - 1);
         open(row - 1, col);
         open(row - 1, col + 1);
