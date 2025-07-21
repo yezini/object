@@ -60,29 +60,30 @@ public class MinesweeperGame {
             }
         }
         while (true) {
-            System.out.println("   a b c d e f g h i j");
+            System.out.println("   a b c d e f g h i j");  //가로 줄 
             for (int i = 0; i < 8; i++) {
-                System.out.printf("%d  ", i + 1);
+                System.out.printf("%d  ", i + 1);  //i는 행 번호 
                 for (int j = 0; j < 10; j++) {
-                    System.out.print(board[i][j] + " ");
+                    System.out.print(board[i][j] + " "); // i행 j열의 셀
                 }
-                System.out.println();
+                System.out.println();  //다음 줄 
             }
-            if (gameStatus == 1) {
+            if (gameStatus == 1) {  //성공
                 System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
                 break;
             }
-            if (gameStatus == -1) {
+            if (gameStatus == -1) { //실패 
                 System.out.println("지뢰를 밟았습니다. GAME OVER!");
                 break;
             }
             System.out.println();
-            System.out.println("선택할 좌표를 입력하세요. (예: a1)");
+            System.out.println("선택할 좌표를 입력하세요. (예: a1)"); //사용자가 열고 싶은 칸 지정  (문자+숫자 조합)
             String input = scanner.nextLine();
             System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
             String input2 = scanner.nextLine();
-            char c = input.charAt(0);
-            char r = input.charAt(1);
+            char c = input.charAt(0); //'3' → 2
+            char r = input.charAt(1); // 'f' → 5 
+                // 1a는 [0][0]를 의미 
             int col;
             switch (c) {
                 case 'a':
