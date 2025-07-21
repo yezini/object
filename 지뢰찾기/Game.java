@@ -1,4 +1,4 @@
-class Game {//게임 전체 제어 
+class Game {//사용자 입력 처리, 게임 흐름 제어, 보드와 사용자 간 인터페이스 연결
     private Board board;
     private Scanner scanner = new Scanner(System.in);
     private boolean isGameOver = false;
