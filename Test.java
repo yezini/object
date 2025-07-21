@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class MinesweeperGameTest {
+public class Test {
 
     private static String[][] board = new String[8][10];  //사용자에게 보여지는 게임판에 해당  
     private static Integer[][] landMineCounts = new Integer[8][10]; //해당 칸 주변에 지뢰가 몇개 있는지를 지정 
