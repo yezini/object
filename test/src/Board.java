@@ -2,8 +2,10 @@ import java.util.Random;
 
 class Board {
     //전체 게임판(Cell 2차원 배열), 지뢰 배치, 셀 열기, 게임 승리 조건 판단
-    private int rows, cols, mineCount; //행, 열, 지뢰 개수
-    private Cell[][] cells;//셀 객체를 담는 2차원 배열
+    //셀의 상태를 기반으로 로직을 구현, Board가 Cell의 메서드를 호출하면서 객체 간 메세지를 주고받는 객체지향 방식으로 구현
+
+    private int rows, cols, mineCount; //행, 열, 지뢰 개수, private 선언(캡슐화)
+    private Cell[][] cells;//셀 객체를 담는 2차원 배열, Board는 Cell 객체 배열을 멤버 변수로 가지고 있음 (합성)
 
     public Board(int rows, int cols, int mineCount) {
         this.rows = rows;
@@ -43,9 +45,9 @@ class Board {
                     cells[i][j].setCountMines(countMinesAround(i, j));//인접한 지뢰 개수 계산
     }
 
-    private int countMinesAround(int r, int c) {
+    private int countMinesAround(int r, int c) {//인접한 지뢰 개수 계산
         int count = 0;
-        for (int dr = -1; dr <= 1; dr++)
+        for (int dr = -1; dr <= 1; dr++)            //dr, dc는 행, 열의 변화량 (자기 자신 (0,0)을 기준으로 8칸)
             for (int dc = -1; dc <= 1; dc++)
                 if (isMineAt(r + dr, c + dc))
                     count++;
@@ -82,7 +84,7 @@ class Board {
             cells[r][c].toggleFlag();
     }
 
-    public boolean isValidPosition(int r, int c) {
+    public boolean isValidPosition(int r, int c) {//코드 중복 제거
         //행과 열이 보드 범위 내에 있는지 확인
         return r >= 0 && r < rows && c >= 0 && c < cols;
     }
@@ -95,13 +97,15 @@ class Board {
 
     public void printBoard() {//보드 출력
         System.out.print("   ");
-        for (char c = 'a'; c < 'a' + cols; c++) System.out.print(c + " ");
+        for (char c = 'a'; c < 'a' + cols; c++) //열 수 만큼 알파벳 출력
+        System.out.print(c + " ");
         System.out.println();
 
         for (int i = 0; i < rows; i++) {
-            System.out.printf("%d  ", i + 1);
+            System.out.printf("%d  ", i + 1);//행 번호 출력(1부터 시작)
             for (int j = 0; j < cols; j++) {
-                System.out.print(cells[i][j] + " ");
+                System.out.print(cells[i][j] + " ");//셀 객체를 문자열로 출력 (toString() 자동 호출)
+                //□, ⚑, ☼, 숫자로 표현
             }
             System.out.println();
         }
